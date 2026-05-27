@@ -159,6 +159,55 @@ curl -s -H "X-Api-Key: $KEY" "$BASE/sales-orders" | \
 curl -s -H "X-Api-Key: $KEY" "$BASE/sample-loans" | python3 -m json.tool
 ```
 
+### Get a specific loan
+```bash
+curl -s -H "X-Api-Key: $KEY" "$BASE/sample-loans/1" | python3 -m json.tool
+```
+
+### Create a new loan (automatically generates SEND_SAMPLE movements)
+```bash
+curl -s -X POST -H "X-Api-Key: $KEY" -H "Content-Type: application/json" \
+  -d '{"loan_date": "2026-05-27", "partner": "Company Name", "contact_location": "City", "purpose": "Showroom display", "lines": [{"product_sku": "NLW1-BRS", "quantity": 1}]}' \
+  "$BASE/sample-loans" | python3 -m json.tool
+```
+⚠️ Loans are created directly in `out` status. SEND_SAMPLE movements are generated immediately at creation — there is no separate send step.
+
+### Return a loan (generates RETURN_SAMPLE movements)
+```bash
+curl -s -X POST -H "X-Api-Key: $KEY" "$BASE/sample-loans/1/return" | python3 -m json.tool
+```
+
+---
+
+## Ledger
+
+### Full movement ledger (all SKUs, newest first)
+```bash
+curl -s -H "X-Api-Key: $KEY" "$BASE/stock/ledger?page=1&page_size=50" | python3 -m json.tool
+```
+
+### Filter ledger by SKU
+```bash
+curl -s -H "X-Api-Key: $KEY" "$BASE/stock/ledger?sku=NLW2-BRS" | python3 -m json.tool
+```
+
+### Filter ledger by movement type
+```bash
+curl -s -H "X-Api-Key: $KEY" "$BASE/stock/ledger?movement_type=COUNT_ADJUSTMENT" | python3 -m json.tool
+```
+Valid movement types: `RECEIVE_CHINA`, `SEND_TREATMENT`, `RECEIVE_TREATMENT`, `SELL_INVOICE`, `SELL_SHOPIFY`, `RESERVE`, `RESERVE_RELEASE`, `SEND_SAMPLE`, `RETURN_SAMPLE`, `COUNT_ADJUSTMENT`, `SCRAP`, `DEVELOPMENT`
+
+---
+
+## Consistency Check
+
+### Verify ledger vs stored balances (read-only)
+```bash
+curl -s -H "X-Api-Key: $KEY" "$BASE/stock/consistency-check" | python3 -m json.tool
+```
+Replays all movements and compares to `stock_balances`. Returns `{"ok": true}` or a list of mismatches with `stored_qty`, `expected_qty`, and `diff`.
+⚠️ Read-only — nothing is changed. If mismatches are found, escalate to a developer.
+
 ---
 
 ## Shopify Inventory Sync
