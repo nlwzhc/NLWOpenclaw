@@ -30,11 +30,14 @@ All product data comes from the API. The `/stock/available` response includes `f
 If you need a finish name and don't have an API response in context, call `GET /products` first.
 
 ## Locations
-- **INTERNAL**: Main warehouse stock
-- **SHOWROOM**: Display items
-- **SUBCONTRACTOR**: Items at TempoKrom (surface treatment)
-- **ADJUSTMENT**: Virtual location used for count corrections
-- **TRANSIT**: Items in transit
+- **INTERNAL**: Main warehouse stock (source of truth for available qty)
+- **LOAN**: Items currently on sample loan with a customer/partner
+- **SHOWROOM**: Display items (not counted as available stock)
+- **TEMPO_KROM** (code: SUBCONTRACTOR): Items at TempoKrom for surface treatment
+- **ADJUSTMENT**: Virtual location used for count corrections (paired with COUNT_ADJUSTMENT movements)
+- **CHINA**: Virtual supplier location (source for RECEIVE_CHINA movements)
+
+> Available stock = INTERNAL balance − reserved qty. LOAN, SHOWROOM, and TEMPO_KROM balances are **not** available stock.
 
 ## Key People
 - **Lars**: Owner — can approve stock counts
