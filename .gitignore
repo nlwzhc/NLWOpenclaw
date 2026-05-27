@@ -1,0 +1,15 @@
+# Ignore local memory files (daily notes are machine-specific)
+agents/*/memory/
+workspace/memory/
+
+# Ignore MEMORY.md (contains private/sensitive info)
+agents/*/MEMORY.md
+workspace/MEMORY.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.swp

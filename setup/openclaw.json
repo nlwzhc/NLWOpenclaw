@@ -1,0 +1,272 @@
+{
+    "meta": {
+        "lastTouchedVersion": "2026.3.24",
+        "lastTouchedAt": "2026-04-29T21:34:33.307Z"
+    },
+    "secrets": {
+        "providers": {
+            "process-env": {
+                "source": "env"
+            }
+        }
+    },
+    "auth": {
+        "profiles": {
+            "github-copilot:github": {
+                "provider": "github-copilot",
+                "mode": "token"
+            }
+        }
+    },
+    "agents": {
+        "defaults": {
+            "model": {
+                "primary": "anthropic/claude-sonnet-4-6"
+            },
+            "models": {
+                "xai/grok-4-fast": {},
+                "xai/grok-4-fast-non-reasoning": {},
+                "anthropic/claude-sonnet-4-6": {
+                    "params": {
+                        "cacheRetention": "short"
+                    }
+                },
+                "anthropic/claude-3-5-haiku-20241022": {
+                    "params": {
+                        "cacheRetention": "none"
+                    }
+                },
+                "anthropic/claude-haiku-4-5-20251001": {
+                    "params": {
+                        "cacheRetention": "none"
+                    }
+                }
+            },
+            "memorySearch": {
+                "provider": "local"
+            },
+            "contextPruning": {
+                "mode": "cache-ttl",
+                "ttl": "24h"
+            },
+            "compaction": {
+                "mode": "safeguard"
+            },
+            "heartbeat": {
+                "every": "2h",
+                "activeHours": {
+                    "start": "00:00",
+                    "end": "23:59",
+                    "timezone": "Europe/Copenhagen"
+                },
+                "model": "anthropic/claude-haiku-4-5-20251001",
+                "target": "last",
+                "lightContext": true,
+                "isolatedSession": true
+            }
+        },
+        "list": [
+            {
+                "id": "main",
+                "subagents": {
+                    "allowAgents": ["*"]
+                }
+            },
+            {
+                "id": "nova_vision",
+                "name": "nova_vision",
+                "workspace": "/home/moltbot/.openclaw/workspace/agents/nova_vision",
+                "agentDir": "/home/moltbot/.openclaw/agents/nova_vision/agent",
+                "model": "anthropic/claude-sonnet-4-6",
+                "identity": { "name": "NovaVision" }
+            },
+            {
+                "id": "nova_design",
+                "name": "nova_design",
+                "workspace": "/home/moltbot/.openclaw/workspace/agents/nova_design",
+                "agentDir": "/home/moltbot/.openclaw/agents/nova_design/agent",
+                "model": "anthropic/claude-sonnet-4-6",
+                "identity": { "name": "NovaDesign" }
+            },
+            {
+                "id": "nova_produkt",
+                "name": "nova_produkt",
+                "workspace": "/home/moltbot/.openclaw/workspace/agents/nova_produkt",
+                "agentDir": "/home/moltbot/.openclaw/agents/nova_produkt/agent",
+                "model": "anthropic/claude-sonnet-4-6",
+                "identity": { "name": "NovaProdukt" }
+            },
+            {
+                "id": "nova_salg",
+                "name": "nova_salg",
+                "workspace": "/home/moltbot/.openclaw/workspace/agents/nova_salg",
+                "agentDir": "/home/moltbot/.openclaw/agents/nova_salg/agent",
+                "model": "anthropic/claude-sonnet-4-6",
+                "identity": { "name": "NovaSalg" }
+            },
+            {
+                "id": "nova_marketing",
+                "name": "nova_marketing",
+                "workspace": "/home/moltbot/.openclaw/workspace/agents/nova_marketing",
+                "agentDir": "/home/moltbot/.openclaw/agents/nova_marketing/agent",
+                "model": "anthropic/claude-sonnet-4-6",
+                "identity": { "name": "NovaMarketing" }
+            },
+            {
+                "id": "nova_intelligence",
+                "name": "nova_intelligence",
+                "workspace": "/home/moltbot/.openclaw/workspace/agents/nova_intelligence",
+                "agentDir": "/home/moltbot/.openclaw/agents/nova_intelligence/agent",
+                "model": "anthropic/claude-sonnet-4-6",
+                "identity": { "name": "NovaIntelligence" }
+            },
+            {
+                "id": "nova_finance",
+                "name": "nova_finance",
+                "workspace": "/home/moltbot/.openclaw/workspace/agents/nova_finance",
+                "agentDir": "/home/moltbot/.openclaw/agents/nova_finance/agent",
+                "model": "anthropic/claude-sonnet-4-6",
+                "identity": { "name": "NovaFinance" }
+            },
+            {
+                "id": "nova_quality",
+                "name": "nova_quality",
+                "workspace": "/home/moltbot/.openclaw/workspace/agents/nova_quality",
+                "agentDir": "/home/moltbot/.openclaw/agents/nova_quality/agent",
+                "model": "anthropic/claude-sonnet-4-6",
+                "identity": { "name": "NovaQuality" }
+            },
+            {
+                "id": "nova_developer",
+                "name": "nova_developer",
+                "workspace": "/home/moltbot/.openclaw/workspace/agents/nova_developer",
+                "agentDir": "/home/moltbot/.openclaw/agents/nova_developer/agent",
+                "model": "anthropic/claude-sonnet-4-6",
+                "identity": { "name": "NovaDeveloper" }
+            },
+            {
+                "id": "nova_ops",
+                "name": "nova_ops",
+                "workspace": "/home/moltbot/.openclaw/workspace/agents/nova_ops",
+                "agentDir": "/home/moltbot/.openclaw/agents/nova_ops/agent",
+                "model": "anthropic/claude-haiku-4-5-20251001",
+                "identity": { "name": "NovaOps" }
+            },
+            {
+                "id": "nova_ops_test",
+                "name": "nova_ops_test",
+                "workspace": "/home/moltbot/.openclaw/workspace/agents/nova_ops_test",
+                "agentDir": "/home/moltbot/.openclaw/agents/nova_ops_test/agent",
+                "model": "anthropic/claude-haiku-4-5-20251001",
+                "identity": { "name": "NovaOpsTest" }
+            }
+        ]
+    },
+    "commands": {
+        "native": "auto",
+        "nativeSkills": "auto",
+        "restart": true,
+        "ownerDisplay": "raw"
+    },
+    "hooks": {
+        "internal": {
+            "enabled": true,
+            "entries": {
+                "boot-md": {
+                    "enabled": true
+                },
+                "bootstrap-extra-files": {
+                    "enabled": true,
+                    "paths": [
+                        "lib/company/IDENTITY.md",
+                        "lib/ops/TOOLS.md"
+                    ]
+                }
+            }
+        }
+    },
+    "channels": {
+        "telegram": {
+            "enabled": true,
+            "dmPolicy": "pairing",
+            "groups": {
+                "-1003994940505": {
+                    "requireMention": false,
+                    "allowFrom": ["*"]
+                }
+            },
+            "groupAllowFrom": ["*"],
+            "groupPolicy": "allowlist",
+            "streaming": "off",
+            "network": {
+                "autoSelectFamily": false,
+                "dnsResultOrder": "ipv4first"
+            },
+            "accounts": {
+                "nova_ops": {
+                    "botToken": {
+                        "source": "env",
+                        "provider": "process-env",
+                        "id": "TELEGRAM_BOT_TOKEN_OPS"
+                    },
+                    "dmPolicy": "open",
+                    "allowFrom": ["*"]
+                },
+                "nova_ops_test": {
+                    "botToken": {
+                        "source": "env",
+                        "provider": "process-env",
+                        "id": "TELEGRAM_BOT_TOKEN_OPS_TEST"
+                    },
+                    "dmPolicy": "open",
+                    "allowFrom": ["*"]
+                },
+                "default": {
+                    "botToken": {
+                        "source": "env",
+                        "provider": "process-env",
+                        "id": "TELEGRAM_BOT_TOKEN"
+                    }
+                }
+            }
+        }
+    },
+    "gateway": {
+        "mode": "local",
+        "bind": "lan",
+        "controlUi": {
+            "allowedOrigins": ["*"]
+        },
+        "auth": {
+            "mode": "token",
+            "token": "REDACTED_SET_IN_OPENCLAW_JSON_ON_SERVER"
+        },
+        "tls": {
+            "enabled": false,
+            "autoGenerate": true
+        }
+    },
+    "plugins": {
+        "entries": {
+            "telegram": {
+                "enabled": true
+            }
+        }
+    },
+    "bindings": [
+        {
+            "match": {
+                "channel": "telegram",
+                "accountId": "nova_ops"
+            },
+            "agentId": "nova_ops"
+        },
+        {
+            "match": {
+                "channel": "telegram",
+                "accountId": "nova_ops_test"
+            },
+            "agentId": "nova_ops_test"
+        }
+    ]
+}
