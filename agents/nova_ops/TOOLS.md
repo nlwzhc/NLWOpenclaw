@@ -139,6 +139,23 @@ curl -s -H "X-Api-Key: $KEY" "$BASE/treatment-orders/1" | python3 -m json.tool
 curl -s -H "X-Api-Key: $KEY" "$BASE/sales-orders" | python3 -m json.tool
 ```
 
+### Get a single sales order (with lines and line IDs)
+```bash
+curl -s -H "X-Api-Key: $KEY" "$BASE/sales-orders/<order_id>" | python3 -m json.tool
+```
+
+### Update unit price on a sales order line
+Works on **any order status**, including delivered.
+```bash
+curl -s -X PATCH -H "X-Api-Key: $KEY" -H "Content-Type: application/json" \
+  -d '{"unit_price_dkk": 299.00}' \
+  "$BASE/sales-orders/<order_id>/lines/<line_id>" | python3 -m json.tool
+```
+- `<order_id>` — from the sales order list
+- `<line_id>` — from the `lines[].id` field in the order detail response
+- `total_price_dkk` is recalculated automatically as `quantity × unit_price_dkk`
+- Returns the full updated order with lines
+
 ### Check reserved stock by order
 ```bash
 curl -s -H "X-Api-Key: $KEY" "$BASE/sales-orders" | \
