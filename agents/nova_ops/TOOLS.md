@@ -250,3 +250,30 @@ print(f'TOTAL AVAILABLE: {total}')
 curl -s -H "X-Api-Key: $KEY" "$BASE/stock/available" | \
   python3 -c "import json,sys; rows=json.load(sys.stdin); mancos=[r for r in rows if r['available_qty']<0]; print('MANCOS:', len(mancos)); [print(' -', r['sku'], r['available_qty']) for r in mancos]"
 ```
+
+---
+
+## Dinero (Accounting)
+
+> Auth: same `X-Api-Key` header. Base URL: same `$BASE`.
+
+### List invoices (newest first)
+```bash
+curl -s -H "X-Api-Key: $KEY" "$BASE/dinero/invoices?page=0&page_size=50" | python3 -m json.tool
+```
+Returns: `Number`, `Guid`, `ContactName`, `Date`, `TotalExclVat`, `TotalInclVat`, `Status`
+Statuses: `Draft`, `Booked`, `Paid`, `OverPaid`, `Overdue`
+
+### Get invoice detail (lines, totals, address)
+```bash
+GUID="<invoice-guid-from-list>"
+curl -s -H "X-Api-Key: $KEY" "$BASE/dinero/invoices/$GUID" | python3 -m json.tool
+```
+Returns full invoice including `Lines[]` with `Description`, `Quantity`, `Amount` (unit price excl. VAT), `TotalAmount` (line total excl. VAT).
+
+### Find a specific customer's invoices
+```bash
+curl -s -H "X-Api-Key: $KEY" "$BASE/dinero/invoices?page=0&page_size=50" | \
+  python3 -c "import json,sys; invs=json.load(sys.stdin)['Collection']; [print(i['Number'], i['Date'], i['TotalInclVat'], i['Status']) for i in invs if 'CUSTOMER' in (i['ContactName'] or '').upper()]"
+```
+Replace `CUSTOMER` with the actual customer name fragment.
